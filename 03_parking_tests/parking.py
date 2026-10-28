@@ -16,16 +16,16 @@ class ParkingLot:
         self.revenue = 0
 
     def enter(self, car_number: str) -> bool:
-        if self.capacity > len(self.cars):
+        if len(self.cars) < self.capacity:
             if car_number not in self.cars:
                 self.cars.append(car_number)
                 return True
         return False
 
     def leave(self, car_number: str, hours: int) -> int | None:
-        if car_number in self.cars:
-            amount = calculate_fee(hours)
-            self.cars.remove(car_number)
-            self.revenue += amount
-            return amount
-        return None
+        if car_number not in self.cars:
+            return None
+        fee = calculate_fee(hours)
+        self.cars.remove(car_number)
+        self.revenue += fee
+        return fee
